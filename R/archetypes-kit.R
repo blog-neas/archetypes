@@ -101,7 +101,7 @@ archetypes <- function(data, k, weights = NULL, maxIterations = 100,
   ### Main loop:
   i <- 1
   imp <- +Inf
-
+  # ---------------------------------------------------
   tryCatch(while ( (i <= maxIterations) & (imp >= minImprovement) ) {
 
     ## Reweight data:
@@ -119,19 +119,24 @@ archetypes <- function(data, k, weights = NULL, maxIterations = 100,
 
     ## Beta's:
     betas <- family$betasfn(betas, x, zas, ...)
-    zs <- x %*% betas
+    zs <- x %*% betas # questo va cambiato con il PAA
+    # regS <- comp_regS()
+    # Atmp <- (X%*%t(Htmp) + regS*X%*%Wtmp)%*%solve(Htmp%*%t(Htmp) + diag(regS, nrow= k))
+    
 
     kappas[c('betas', 'zs')] <- c(kappa(betas), kappa(zs))
-
+    
 
     ## Residuals, RSS and improvement:
     alphas0 <- family$alphasfn(alphas, zs, x0, ...)
 
     resid <- zs %*% alphas0 - x0
     rss2 <- family$normfn(resid, ...) / n
-
+    # rss2 <- cCost_norm(W, H, X, A) # nuova funz obiettivo
+    
     imp <- rss - rss2
     rss <- rss2
+    
 
 
     ## Loop Zeugs:
@@ -148,7 +153,7 @@ archetypes <- function(data, k, weights = NULL, maxIterations = 100,
     i <- i + 1
   },
   error = function(e) errormsg <<- e)
-
+# ---------------------------------------------------
 
   ### Check illness:
   if ( !is.null(errormsg) ) {

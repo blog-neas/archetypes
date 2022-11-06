@@ -1,5 +1,53 @@
 
 
+
+cCost_norm <- function(W, H, X, A, pars0 = c(1,1)){
+  p <- NROW(X) # nFeat
+  n <- NCOL(X) # nSam
+  k <- NCOL(A) # nLat
+  # p*n = nr. elementi di X
+  # p*k = nr. elementi di A
+  
+  alpha0 <- pars0[1]
+  beta0 <- pars0[2]
+  
+  ########## versione Variational Bound, da rivedere!!! ---------------------------------------
+  #
+  alpha1 <- alpha0 + (p*n)/2;
+  beta1 <- beta0 + 0.5*norm(X - A%*%H, "F")^2
+  alpha2 <- alpha0 + (p*k)/2;
+  beta2 <- beta0 + 0.5*norm(A - X%*%W, "F")^2
+  
+  entGamma1 <- -log(beta1) + alpha1 + lgamma(alpha1) + (1 - alpha1) * digamma(alpha1)
+  entGamma2 <- -log(beta2) + alpha2 + lgamma(alpha2) + (1 - alpha2) * digamma(alpha2)
+  logGamma1 <- digamma(alpha1) - log(beta1)
+  logGamma2 <- digamma(alpha2) - log(beta2)
+  
+  val <- - alpha1 - alpha2 + 0.5*(n*p)*logGamma1 +  0.5*(p*k)*logGamma2 + entGamma1 + entGamma2
+  
+  return(val)
+  
+}
+
+comp_regS <- function(Wtmp, Htmp, X, A,pars0 = c(1,1)){
+  p <- NROW(X) # nFeat
+  n <- NCOL(X) # nSam
+  k <- NCOL(A) # nLat
+  
+  alpha0 <- pars0[1] 
+  beta0 <- pars0[2]
+  
+  alpha1 <- alpha0 + (n*p)/2
+  beta1 <- beta0 + 0.5*norm(X - A%*%Htmp, type = "F")^2
+  
+  alpha2 <- alpha0 + (k*p)/2
+  beta2 <- beta0 + 0.5*norm(A - X%*%Wtmp, type = "F")^2
+  
+  regS = (alpha2/beta2) / (alpha1/beta1)
+  regS
+}
+
+
 ### Scaling and rescaling functions: #################################
 
 #' Scaling block: standardize to mean 0 and standard deviation 1.
