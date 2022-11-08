@@ -60,7 +60,7 @@ as.archetypes <- function(object, k, alphas, rss, iters = NULL, call = NULL,
 setOldClass(c("archetypes"))
 
 
-#' @S3method print archetypes
+#' @method print archetypes
 print.archetypes <- function(x, full = TRUE, ...) {
   if ( full ) {
     cat('Archetypes object\n\n')
@@ -80,11 +80,9 @@ print.archetypes <- function(x, full = TRUE, ...) {
 #' @param object An \code{archetypes} object.
 #' @param ... Ignored.
 #' @return Matrix with approximated data.
+#' @importFrom stats fitted
 #' @method fitted archetypes
 #' @rdname fitted
-#'
-#' @importFrom stats fitted
-#' @S3method fitted archetypes
 fitted.archetypes <- function(object, ...) {
   t(t(object$archetypes) %*% t(object$alphas))
 }
@@ -117,11 +115,9 @@ function(object, ...) {
 #' @param type Return alpha or beta coefficients.
 #' @param ... Ignored.
 #' @return Coefficient matrix.
+#' @importFrom stats coef
 #' @method coef archetypes
 #' @rdname coef
-#'
-#' @importFrom stats coef
-#' @S3method coef archetypes
 coef.archetypes <- function(object, type = c('alphas', 'betas'), ...) {
   type <- match.arg(type)
   object[[type]]
@@ -134,11 +130,9 @@ coef.archetypes <- function(object, type = c('alphas', 'betas'), ...) {
 #' @param object An \code{archetypes} object.
 #' @param ... Ignored.
 #' @return Matrix with residuals.
+#' @importFrom stats residuals
 #' @method residuals archetypes
 #' @rdname residuals
-#'
-#' @importFrom stats residuals
-#' @S3method residuals archetypes
 residuals.archetypes <- function(object, ...) {
   object$residuals
 }
@@ -153,8 +147,6 @@ residuals.archetypes <- function(object, ...) {
 #' @return Residual sum of squares.
 #' @method rss archetypes
 #' @rdname rss
-#'
-#' @S3method rss archetypes
 rss.archetypes <- function(object, type = c('scaled', 'single', 'global'), ...) {
   type <- match.arg(type)
   resid <- residuals(object)
@@ -174,11 +166,9 @@ rss.archetypes <- function(object, type = c('scaled', 'single', 'global'), ...) 
 #'   weights calculated during the iterations (robust archetypes).
 #' @param ... Ignored.
 #' @return Vector of weights.
+#' @importFrom stats weights
 #' @method weights archetypes
 #' @rdname weights
-#'
-#' @importFrom stats weights
-#' @S3method weights archetypes
 weights.archetypes <- function(object, type = c('weights', 'reweights'), ...) {
   type <- match.arg(type)
   object[[type]]
@@ -194,7 +184,6 @@ weights.archetypes <- function(object, type = c('weights', 'reweights'), ...) {
 #' @rdname kappa
 #'
 #' @method kappa archetypes
-#' @S3method kappa archetypes
 kappa.archetypes <- function(z, ...) {
   return(z$kappas)
 }
@@ -209,7 +198,6 @@ kappa.archetypes <- function(z, ...) {
 #' @rdname nparameters
 #'
 #' @method nparameters archetypes
-#' @S3method nparameters archetypes
 nparameters.archetypes <- function(object, ...) {
   return(object$k)
 }
@@ -229,7 +217,6 @@ nparameters.archetypes <- function(object, ...) {
 #' @rdname predict
 #'
 #' @method predict archetypes
-#' @S3method predict archetypes
 predict.archetypes <- function(object, newdata, ...) {
   stopifnot(object$family$which == "original")
 

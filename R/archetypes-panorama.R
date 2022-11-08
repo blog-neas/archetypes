@@ -16,7 +16,6 @@
 #' @param atypes.cex Magnification of the archetype distances.
 #' @param ylim The y limits of the plot.
 #' @param ... Passed to the underlying \code{plot} call.
-#' @S3method panorama archetypes
 #' @method panorama archetypes
 #' @examples
 #'   \dontrun{

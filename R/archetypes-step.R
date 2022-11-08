@@ -74,8 +74,6 @@ setOldClass('stepArchetypes')
 #'   defined in \code{i}.
 #' @method [ stepArchetypes
 #' @rdname extract
-#'
-#' @S3method "[" stepArchetypes
 `[.stepArchetypes` <- function(x, i) {
   y <- unclass(x)[i]
   attributes(y) <- attributes(x)
@@ -85,7 +83,7 @@ setOldClass('stepArchetypes')
 
 
 
-#' @S3method print stepArchetypes
+#' @method print stepArchetypes
 print.stepArchetypes <- function(x, ...) {
   cat('StepArchetypes object\n\n')
   cat(deparse(attr(x, 'call')), '\n')
@@ -101,8 +99,6 @@ print.stepArchetypes <- function(x, ...) {
 #'
 #' @method summary stepArchetypes
 #' @rdname summary
-#'
-#' @S3method summary stepArchetypes
 summary.stepArchetypes <- function(object, ...) {
   print(object)
 
@@ -130,8 +126,6 @@ function(object, ...) {
 
 #' @rdname nparameters
 #' @method nparameters stepArchetypes
-#'
-#' @S3method nparameters stepArchetypes
 nparameters.stepArchetypes <- function(object, ...) {
   return(sapply(object, nparameters))
 }
@@ -140,8 +134,6 @@ nparameters.stepArchetypes <- function(object, ...) {
 
 #' @rdname rss
 #' @method rss stepArchetypes
-#'
-#' @S3method rss stepArchetypes
 rss.stepArchetypes <- function(object, ...) {
   ret <- t(sapply(object, rss))
   rownames(ret) <- paste('k', nparameters(object), sep='')
@@ -157,8 +149,6 @@ rss.stepArchetypes <- function(object, ...) {
 #'
 #' @rdname bestModel
 #' @method bestModel stepArchetypes
-#'
-#' @S3method bestModel stepArchetypes
 bestModel.stepArchetypes <- function(object, ...) {
   zsmin <- lapply(object, bestModel)
 
@@ -170,7 +160,7 @@ bestModel.stepArchetypes <- function(object, ...) {
 
 
 
-#' @S3method print repArchetypes
+#' @method print repArchetypes
 print.repArchetypes <- function(x, ...) {
   for ( i in seq_along(x) )
     print(x[[i]], ...)
@@ -193,8 +183,6 @@ function(object, ...) {
 
 #' @rdname rss
 #' @method rss repArchetypes
-#'
-#' @S3method rss repArchetypes
 rss.repArchetypes <- function(object, ...) {
   ret <- sapply(object, rss)
   names(ret) <- paste('r', seq_along(ret), sep='')
@@ -206,8 +194,6 @@ rss.repArchetypes <- function(object, ...) {
 
 #' @rdname nparameters
 #' @method nparameters repArchetypes
-#'
-#' @S3method nparameters repArchetypes
 nparameters.repArchetypes <- function(object, ...) {
   nparameters(object[[1]])
 }
@@ -216,8 +202,6 @@ nparameters.repArchetypes <- function(object, ...) {
 
 #' @rdname bestModel
 #' @method bestModel repArchetypes
-#'
-#' @S3method bestModel repArchetypes
 bestModel.repArchetypes <- function(object, ...) {
   m <- which.min(rss(object))
 

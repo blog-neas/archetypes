@@ -4,7 +4,15 @@ Title: Archetypal Analysis
 Version: 2.2-0.1
 Date: 2014-04-08
 Depends: methods, stats, modeltools, nnls (>= 1.1)
-Suggests: MASS, vcd, mlbench, ggplot2, TSP
+Encoding: UTF-8
+Suggests: 
+    MASS,
+    vcd,
+    mlbench,
+    ggplot2,
+    TSP,
+    knitr,
+    rmarkdown
 Authors@R: c(person("Manuel", "J. A. Eugster", role = c("aut", "cre"), email =
     "manuel@mjae.net"), person("Friedrich", "Leisch", role = "aut"),
     person("Sohan", "Seth", role = "ctb"))
@@ -28,3 +36,5 @@ Maintainer: Manuel J. A. Eugster <manuel@mjae.net>
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 2019-04-22 06:55:33 UTC
+RoxygenNote: 7.2.1
+VignetteBuilder: knitr

@@ -41,3 +41,4 @@ new.memento <- function() {
 
   structure(memento, class = 'memento')
 }
+

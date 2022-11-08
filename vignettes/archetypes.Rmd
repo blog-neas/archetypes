@@ -1,0 +1,59 @@
+---
+title: "From Spider-Man to Hero. Archetypal Analysis in R"
+author: "Manuel J. A. Eugster, Friedrich Leisch"
+date: "`r Sys.Date()`"
+bibliography: archetypes.bib
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{From Spider-Man to Hero. Archetypal Analysis in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteKeyword{PDF}
+  %\VignetteKeyword{HTML}
+  %\VignetteKeyword{R}
+  %\VignetteKeyword{archetypal analysis}
+  %\VignetteKeyword{convex hull}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(archetypes)
+```
+
+## Introduction
+
+
+The @merriam-websterarchetype defines an archetype as:
+
+> the original pattern or model of which all things of the same type are representations or copies.
+
+The aim of archetypal analysis is to find "pure types", the archetypes, within a set defined in a specific context. The concept of archetypes is used in many different areas, the set can be defined in terms of literature, philosophy, psychology and also statistics. Here, the concrete problem is to find a few, not necessarily observed, points (archetypes) in a set of multivariate observations such that all the data can be well represented as convex combinations of the archetypes. The title of this article illustrates the concept of archetypes on the basis of archetypes in literature: the _Spider-Man_ personality belongs to the generic _Hero_ archetype, and archetypal analysis tries to find this coherence.
+
+In statistics archetypal analysis was first introduced by
+@CutlerBreiman1994. In their paper they laid out the
+theoretical foundations, defined the concrete problem as a nonlinear least squares problem and presented an alternating minimizing algorithm to solve it. It has found applications in different areas, with recently grown popularity in economics, e.g., @LiWangLouviereCarson2003 and @PorzioRagoziniVistocco2008. In spite of the rising interest in this computer-intensive but numerically sensitive method, no "easy-to-use" and freely available software package has been developed yet. In this paper we present the software package `archetypes` within the _R_ statistical environment [@Rcit] which provides an implementation of the archetypal analysis algorithm. Additionally, the package provides exploratory tools to visualize the algorithm during the minimization steps and its final result. The newest released version of `archetypes` is always available from the Comprehensive R Archive Network at [http://CRAN.R-project.org/package=archetypes]().
+
+The paper is organized as follows: In Section [archetypal analysis](#archetypal-analysis) we outline the archetypal analysis with its different conceptual parts. We present the theoretical background as far as we need it for a sound introduction of our implementation; for a complete explanation we refer to the original paper. Section [using package `archetypes`](#using-package-archetypes) demonstrates how to use `archetypes` based on a simple artificial data set, with details about numerical problems and the behavior of the algorithm. Section [computational complexity](#computational-complexity) presents a simulation study to show how the implementation scales with numbers of observations, attributes and archetypes. In Section [example: skeletal archetypes](#example-skeletal-archetypes) we show a real word example -- the archetypes of human skeletal diameter measurements. Section [summary and outlook](#summary-and-outlook) concludes the article with future investigations.
+
+
+## Archetypal analysis
+
+## Using package `archetypes`
+
+## Computational complexity
+
+## Example: Skeletal archetypes
+
+## Summary and outlook
+
+
+More ... ... ... ...
+
+## References

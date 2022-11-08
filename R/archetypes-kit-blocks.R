@@ -48,6 +48,40 @@ comp_regS <- function(Wtmp, Htmp, X, A,pars0 = c(1,1)){
 }
 
 
+#' Update Archetypes
+#' @param x Data matrix.
+#' @param alphas The coefficients.
+#' @param betas The coefficients.
+#' @param ... Additional parameters.
+#' @return zs Archetypes matrix
+#' @noRd
+default.updatezsfn <- function(x, alphas, betas, ...) {
+  
+  zs <- x %*% betas
+  attr(zs, '.Meta') <- attr(x, '.Meta')
+  
+  return(zs)
+}
+
+#' Update Archetypes, parametric case
+#' @param x Data matrix.
+#' @param alphas The coefficients.
+#' @param betas The coefficients.
+#' @param ... Additional parameters.
+#' @return zs Archetypes matrix
+#' @noRd
+probabilistic.updatezsfn <- function(x, alphas, betas, ...) {
+  
+  regS <- comp_regS(betas, alphas, x, x %*% betas)
+  k <- NCOL(x %*% betas)
+  
+  zs <- (x%*%t(alphas) + regS*x%*%betas)%*%solve(alphas%*%t(alphas) + diag(regS, nrow = k))
+  
+  attr(zs, '.Meta') <- attr(x, '.Meta')
+  
+  return(zs)
+}
+
 ### Scaling and rescaling functions: #################################
 
 #' Scaling block: standardize to mean 0 and standard deviation 1.
@@ -222,8 +256,8 @@ nnls.alphasfn <- function(coefs, C, d, ...) {
   n = ncol(d)
 
   for ( j in 1:n )
-    coefs[,j] = coef(nnls(C, d[,j]))
-
+    coefs[,j] = nnls(C, d[,j])$x # coefs[,j] = coef(nnls(C, d[,j]))
+  
   return(coefs)
 }
 
@@ -247,7 +281,7 @@ snnls.alphasfn <- function(coefs, C, d, ...) {
   yint = t(s$u) %*% d
 
   for ( j in 1:n )
-    coefs[,j] = coef(nnls(diag(s$d, nrow=nr, ncol=nc) %*% t(s$v), yint[,j]))
+    coefs[,j] = nnls(diag(s$d, nrow=nr, ncol=nc) %*% t(s$v), yint[,j])$x # coefs[,j] = coef(nnls(diag(s$d, nrow=nr, ncol=nc) %*% t(s$v), yint[,j]))
 
   return(coefs)
 }
@@ -453,7 +487,7 @@ binary.bisquare0.reweightsfn <- function(resid, reweights,
 #' @family archetypes
 #'
 #' @export
-archetypesFamily <- function(which = c('original', 'weighted', 'robust'), ...) {
+archetypesFamily <- function(which = c('original', 'weighted', 'robust', 'probabilistic_original'), ...) {
 
   which <- match.arg(which)
   blocks <- list(...)
@@ -492,6 +526,25 @@ archetypesFamily <- function(which = c('original', 'weighted', 'robust'), ...) {
        globweightfn = function(x, weights) x,
        weightfn = function(x, weights) x,
        reweightsfn = function(x, weights) weights,
+       updatezsfn = default.updatezsfn,
        class = NULL)
 }
+
+.probabilistic_original.archetypesFamily <- function() {
+  list(normfn = norm2.normfn,
+       scalefn = std.scalefn,
+       rescalefn = std.rescalefn,
+       dummyfn = make.dummyfn(200),
+       undummyfn = rm.undummyfn,
+       initfn = make.random.initfn(1),
+       alphasfn = nnls.alphasfn,
+       betasfn = nnls.betasfn,
+       zalphasfn = qrsolve.zalphasfn,
+       globweightfn = function(x, weights) x,
+       weightfn = function(x, weights) x,
+       reweightsfn = function(x, weights) weights,
+       updatezsfn = probabilistic.updatezsfn,
+       class = NULL)
+}
+
 

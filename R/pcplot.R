@@ -6,9 +6,9 @@
 #' Default parallel coordinates plot.
 #'
 #' Code copied from function \code{\link[MASS]{parcoord}} of package
-#' \code{MASS} to simply play arround with the visualization of archetypes.
+#' \code{MASS} to simply play around with the visualization of archetypes.
 #' At a later date, when it is clear which visualisation is the best, the
-#' functionality is probabibly merged with the original function or it is
+#' functionality is probably merged with the original function or it is
 #' possible with parallel coordinate plots which are available et all.
 #'
 #' @param x A \eqn{n \times m} matrix or data frame who columns represent
@@ -21,7 +21,6 @@
 #'   function.
 #' @return Undefined.
 #' @method pcplot default
-#' @S3method pcplot default
 pcplot.default <- function (x, col=gray(0.7), lty=1, var.label=TRUE,
                             rx=NULL, ...) {
 

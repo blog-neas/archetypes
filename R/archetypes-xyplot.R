@@ -111,7 +111,6 @@ xyplot.archetypes <- function(x, y,
 #' @param weights.type Weights to display; see \code{\link{weights.archetypes}}.
 #' @param ... Arguments of \code{\link{xyplot.archetypes}}.
 #' @method xyplot weightedArchetypes
-#' @S3method xyplot weightedArchetypes
 xyplot.weightedArchetypes <- function(x, y, data.col = 1,
                                       data.pch = 21, data.bg = gray,
                                       link.col = NULL, link.lty = NULL,
@@ -144,7 +143,6 @@ xyplot.weightedArchetypes <- function(x, y, data.col = 1,
 #' @param ... Arguments of \code{\link{xyplot.weightedArchetypes}} and
 #'   \code{\link{xyplot.robustArchetypes}}
 #' @method xyplot robustArchetypes
-#' @S3method xyplot robustArchetypes
 xyplot.robustArchetypes <- function(x, y, ...) {
   xyplot.weightedArchetypes(x, y, weights.type = 'reweights', ...)
 }
@@ -163,7 +161,6 @@ xyplot.robustArchetypes <- function(x, y, ...) {
 #' @param ... Passed to the underlying plot functions.
 #' @return Undefined.
 #' @method xyplot stepArchetypes
-#' @S3method xyplot stepArchetypes
 #' @export
 xyplot.stepArchetypes <- function(x, y,
                                   data.col=gray(0.7), data.pch=19,
